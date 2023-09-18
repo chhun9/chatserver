@@ -1,6 +1,6 @@
-package com.test.chat.config;
+package com.test.chat.common.config;
 
-import com.test.chat.component.WebsocketHandler;
+import com.test.chat.handler.WebsocketHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;

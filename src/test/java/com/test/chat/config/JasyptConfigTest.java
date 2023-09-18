@@ -1,5 +1,6 @@
 package com.test.chat.config;
 
+import com.test.chat.common.config.JasyptConfig;
 import org.assertj.core.api.Assertions;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.junit.jupiter.api.DisplayName;
