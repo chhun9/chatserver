@@ -1,9 +1,10 @@
 <template>
-  <router-view/>
+  <div>
+    helo
+  </div>
 </template>
-
 <script>
 export default {
-  name: 'App',
+  name: 'ChatRoom'
 }
 </script>
