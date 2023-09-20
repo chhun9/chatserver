@@ -39,7 +39,7 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     this.findAllRooms()
   },
   methods: {
@@ -71,12 +71,11 @@ export default {
     },
     enterRoom(roomId) {
       let sender = prompt('대화명을 입력해 주세요.')
-      if (!sender) {
+      if (sender) {
         localStorage.setItem('wschat.sender', sender)
         localStorage.setItem('wschat.roomId', roomId)
 
-        let path = this.path.enterRoom
-        path.replace('{roomId}', roomId)
+        let path = this.path.enterRoom.replace('{roomId}',roomId)
         this.$router.push(path)
       }
     }
