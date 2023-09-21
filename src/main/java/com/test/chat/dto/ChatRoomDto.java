@@ -3,11 +3,13 @@ package com.test.chat.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Getter
 @Setter
-public class ChatRoomDto {
+public class ChatRoomDto implements Serializable {
+    private static final Long serialVersionUID = 922337236854775807L;
     private String roomId;
     private String name;
 
