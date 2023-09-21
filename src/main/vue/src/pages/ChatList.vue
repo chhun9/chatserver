@@ -59,7 +59,6 @@ export default {
         axios.post(url, searchParam)
             .then(
                 res => {
-                  console.log(res.data)
                   this.roomName = ''
                   this.findAllRooms()
                 }

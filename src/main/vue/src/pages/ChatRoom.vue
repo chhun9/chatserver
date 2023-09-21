@@ -52,6 +52,8 @@ export default {
     connect() {
       this.sock = new sockjs('http://localhost:8080/ws-stomp')
       this.ws = webStomp.over(this.sock)
+      this.ws.debug = () => {
+      }
 
       this.ws.connect({}, (frame) => {
         let url = this.url.connectRoom.replace('{roomId}', this.roomId)
@@ -86,7 +88,7 @@ export default {
       this.message = ''
     },
     recvMessage(recv) {
-      this.messages.unshift({
+      this.messages.push({
         "type": recv.type,
         "sender": recv.type == 'ENTER' ? '[알림]' : recv.sender,
         "message": recv.message
