@@ -1,5 +1,5 @@
 <template>
-  <div v-html="pageHtml"/>
+  <div v-html="pageHtml" ref="loginPage"/>
 </template>
 <script>
 import axios from "axios"
