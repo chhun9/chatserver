@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from "vue-router";
 import ChatList from "../pages/ChatList.vue";
 import ChatRoom from "../pages/ChatRoom.vue";
 import LoginPage from "../pages/LoginPage.vue";
+import JoinPage from "../pages/JoinPage.vue";
 
 const routes = [
     {
@@ -19,6 +20,10 @@ const routes = [
     {
         path: '/login',
         component: LoginPage
+    },
+    {
+        path: '/join',
+        component: JoinPage
     }
 ]
 
