@@ -33,7 +33,7 @@ export default {
       joinBtn.setAttribute('class', 'btn btn-lg btn-primary btn-block')
       joinBtn.innerText = 'Join in'
       joinBtn.addEventListener('click', (e) => {
-        this.$route.push('/join')
+        this.$router.push('/join')
       })
       signForm.appendChild(joinBtn)
     }
