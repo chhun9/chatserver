@@ -15,8 +15,8 @@
       </div>
     </div>
     <ul>
-      <li v-for="item in chatRooms" v-bind:key="item.roomId" v-on:click="enterRoom(item.roomId)">
-        {{ item.name }}
+      <li v-for="item in chatRooms" v-bind:key="item.chatRoomSeq" v-on:click="enterRoom(item.chatRoomSeq)">
+        {{ item.chatRoomName }}
       </li>
     </ul>
   </div>
@@ -35,7 +35,7 @@ export default {
         createRoom: '/chat/room'
       },
       path: {
-        enterRoom: '/chat/room/{roomId}'
+        enterRoom: '/chat/room/{chatRoomSeq}'
       }
     }
   },
@@ -55,7 +55,7 @@ export default {
       } else {
         let url = this.url.createRoom
         let searchParam = new URLSearchParams
-        searchParam.append('name', this.roomName)
+        searchParam.append('chatRoomName', this.roomName)
         axios.post(url, searchParam)
             .then(
                 res => {
@@ -68,15 +68,9 @@ export default {
             })
       }
     },
-    enterRoom(roomId) {
-      let sender = prompt('대화명을 입력해 주세요.')
-      if (sender) {
-        localStorage.setItem('wschat.sender', sender)
-        localStorage.setItem('wschat.roomId', roomId)
-
-        let path = this.path.enterRoom.replace('{roomId}',roomId)
-        this.$router.push(path)
-      }
+    enterRoom(chatRoomSeq) {
+      let path = this.path.enterRoom.replace('{chatRoomSeq}', chatRoomSeq)
+      this.$router.push(path)
     }
   }
 }

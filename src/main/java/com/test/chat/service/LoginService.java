@@ -36,10 +36,7 @@ public class LoginService implements UserDetailsService {
         }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        ChatUser chatUser = new ChatUser();
-        chatUser.setChatUserId(chatUserDto.getChatUserId());
-        chatUser.setChatUserPw(encoder.encode(chatUserDto.getChatUserPw()));
-        chatUser.setRoleCode(RoleCode.ROLE_USER);
+        ChatUser chatUser = new ChatUser(chatUserDto.getChatUserId(), encoder.encode(chatUserDto.getChatUserPw()), RoleCode.ROLE_USER);
 
         return chatUserRepository.save(chatUser);
     }
