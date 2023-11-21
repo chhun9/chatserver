@@ -15,10 +15,14 @@ import java.util.List;
 public class ChatRoomController {
     private final ChatRoomService chatRoomService;
     private final JwtTokenProvider jwtTokenProvider;
-
     @GetMapping("/rooms")
     @ResponseBody
     public List<ChatRoom> rooms() {
+        return chatRoomService.getChatRooms();
+    }
+    @GetMapping("/connect/rooms")
+    @ResponseBody
+    public List<ChatRoom> connectRooms() {
         return chatRoomService.getChatRoomByChatUser();
     }
     @PostMapping("/room")

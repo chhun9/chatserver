@@ -1,37 +1,43 @@
 <template>
-  <div>
-    <div>
-      <div>
-        <h3>채팅방 리스트</h3>
-      </div>
+  <div class="container">
+    <div class="left-panel">
+      <enter-chat-list :title-text="openChatRooms.title" :label-text="openChatRooms.label"
+                       :button-text="openChatRooms.button" :chat-rooms='openChatRooms.chatRooms'
+                       @confirm="createRoom" @enter-room="enterRoom"/>
     </div>
-    <div>
-      <div>
-        <label>방제목</label>
-      </div>
-      <input type="text" v-model="roomName" v-on:keyup.enter="createRoom">
-      <div>
-        <button type="button" @click="createRoom">채팅방 개설</button>
-      </div>
+    <div class="right-panel">
+      <enter-chat-list :title-text="connectChatRooms.title" :label-text="connectChatRooms.label"
+                       :button-text="connectChatRooms.button" :chat-rooms="connectChatRooms.chatRooms"
+                       @confirm="searchRoom" @enter-room="enterRoom"/>
     </div>
-    <ul>
-      <li v-for="item in chatRooms" v-bind:key="item.chatRoomSeq" v-on:click="enterRoom(item.chatRoomSeq)">
-        {{ item.chatRoomName }}
-      </li>
-    </ul>
   </div>
 </template>
 <script>
 import axios from "axios"
+import EnterChatList from "@/components/EnterChatList.vue";
 
 export default {
   name: 'ChatList',
+  components: {
+    EnterChatList
+  },
   data() {
     return {
-      roomName: '',
-      chatRooms: [],
+      openChatRooms: {
+        title: '오픈 채팅방 리스트',
+        label: '오픈 방제목',
+        button: '채팅방 개설',
+        chatRooms: [],
+      },
+      connectChatRooms: {
+        title: '접속 채팅방 리스트',
+        label: '접속 방제목',
+        button: '채팅방 검색',
+        chatRooms: [],
+      },
       url: {
         findAllRooms: '/chat/rooms',
+        findAllConnectRooms: '/chat/connect/rooms',
         createRoom: '/chat/room'
       },
       path: {
@@ -45,28 +51,37 @@ export default {
   methods: {
     findAllRooms() {
       axios.get(this.url.findAllRooms).then(res => {
-        this.chatRooms = res.data
+        this.openChatRooms.chatRooms = res.data
+      })
+      this.findAllConnectRooms()
+    },
+    findAllConnectRooms() {
+      axios.get(this.url.findAllConnectRooms).then(res => {
+        this.connectChatRooms.chatRooms = res.data
       })
     },
-    createRoom() {
-      if (!this.roomName) {
+    createRoom(roomName) {
+      console.log(roomName)
+      if (!roomName) {
         alert("방 제목 입력")
         return
       } else {
         let url = this.url.createRoom
         let searchParam = new URLSearchParams
-        searchParam.append('chatRoomName', this.roomName)
+        searchParam.append('chatRoomName', roomName)
         axios.post(url, searchParam)
             .then(
                 res => {
-                  this.roomName = ''
                   this.findAllRooms()
                 }
             )
             .catch(err => {
-              alert(this.roomName + '방 개설 실패')
+              alert(this.openChatRooms.button + ' 실패')
             })
       }
+    },
+    searchRoom(roomName) {
+      alert('searchRoom은 나중에')
     },
     enterRoom(chatRoomSeq) {
       let path = this.path.enterRoom.replace('{chatRoomSeq}', chatRoomSeq)
@@ -76,3 +91,16 @@ export default {
 }
 
 </script>
+<style scoped>
+.container {
+  display: flex; /* Flexbox 레이아웃 사용 */
+  width: 100vw; /* 화면 너비 전체 사용 */
+  height: 100vh; /* 화면 높이 전체 사용 */
+}
+
+.left-panel,
+.right-panel {
+  flex: 1; /* 두 패널이 동일한 너비를 갖도록 설정 */
+  overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+}
+</style>

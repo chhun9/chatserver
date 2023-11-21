@@ -20,6 +20,9 @@ public class ChatRoomService {
     private final ChatUserRepository chatUserRepository;
     private final ChatUserChatRoomRepository chatUserChatRoomRepository;
 
+    public List<ChatRoom> getChatRooms(){
+        return chatRoomRepository.findAll();
+    }
     public List<ChatRoom> getChatRoomByChatUser(){
         ChatUser loginChatUser = getLoginChatUser();
         return chatRoomRepository.findAllByChatUserChatRoomsIn(loginChatUser.getChatUserChatRooms());
